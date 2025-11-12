@@ -1,31 +1,8 @@
 
 services:
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: pgadmin4_container
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8888:80"
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: ayopedro2012@gmail.com
-  #     PGADMIN_DEFAULT_PASSWORD: password
-  #   volumes:
-  #     - pgadmin-data:/var/lib/pgadmin
-  #     - /home/ayopedro/Downloads:/var/downloads
-  mysql:
-    image: mariadb:lts
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    ports:
-      - '3306:3306'
-    restart: always
-    volumes:
-      - mysql:/var/lib/mysql
   postgres:
     image: postgres:14-alpine
+    container_name: lab-postgres-1
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -33,21 +10,67 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
-    restart: always
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql:
+    image: mariadb:lts
+    container_name: lab-mysql-1
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - '3306:3306'
+    restart: unless-stopped
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   redis:
     image: redis:latest
+    container_name: lab-redis-1
     environment:
-      - REDIS_URL=${REDIS_URL}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
-      - 6379:6379
-    restart: always
+      - '6379:6379'
+    restart: unless-stopped
     volumes:
+      - redis:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "--pass", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # pgAdmin web interface (optional - uncomment if you prefer web UI over DBeaver)
+  # pgadmin:
+  #   image: dpage/pgadmin4:latest
+  #   container_name: lab-pgadmin-1
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5050:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@lab.local}
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+  #   volumes:
+  #     - pgadmin:/var/lib/pgadmin
+  #   depends_on:
+  #     - postgres
 
 volumes:
-  # pgadmin-data:
   postgres:
-  redis:
   mysql:
+  redis:
+  # pgadmin:
