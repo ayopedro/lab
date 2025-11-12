@@ -41,6 +41,7 @@ services:
     container_name: lab-redis-1
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
     ports:
       - '6379:6379'
     restart: unless-stopped
