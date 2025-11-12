@@ -117,7 +117,7 @@ For environment-variable substitution inside DBeaver, manually enter resolved va
 
 If you prefer a web interface for Postgres, uncomment the `pgadmin` service in `docker-compose.yml`:
 
-1. Uncomment the pgAdmin service and volume in `docker-compose.yml`
+1. Uncomment both the `pgadmin` service (lines 58-70) AND the `pgadmin` volume (line 76) in `docker-compose.yml`
 2. Add to your `.env` file:
    ```bash
    PGADMIN_EMAIL=your-email@example.com
