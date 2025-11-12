@@ -64,9 +64,6 @@ if command -v gpg >/dev/null 2>&1; then
   export GPG_TTY=$(tty)
 fi
 
-# Zsh syntax highlighting (if installed via Homebrew)
-[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Docker CLI completions (added by Docker Desktop)
 if [ -d "$HOME/.docker/completions" ]; then
   fpath=($HOME/.docker/completions $fpath)
@@ -81,3 +78,6 @@ fi
 
 # Source additional local overrides (not tracked)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# Zsh syntax highlighting - MUST be at the end (if installed via Homebrew)
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
