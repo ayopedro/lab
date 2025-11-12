@@ -100,7 +100,10 @@ cp .env.sample .env
 ```
 Never commit the populated `.env` file.
 
-### DBeaver Connections
+### Database GUI Options
+
+**Option 1: DBeaver (Recommended - Desktop App)**
+
 Use DBeaver to connect to compose databases:
 | Service | Host | Port | User | Password | Notes |
 |---------|------|------|------|----------|-------|
@@ -109,6 +112,23 @@ Use DBeaver to connect to compose databases:
 | Redis | localhost | 6379 | (none) | ${REDIS_PASSWORD} | Enable password auth in connection settings |
 
 For environment-variable substitution inside DBeaver, manually enter resolved values from your `.env` file.
+
+**Option 2: pgAdmin (Web-based - Optional)**
+
+If you prefer a web interface for Postgres, uncomment the `pgadmin` service in `docker-compose.yml`:
+
+1. Uncomment the pgAdmin service and volume in `docker-compose.yml`
+2. Add to your `.env` file:
+   ```bash
+   PGADMIN_EMAIL=your-email@example.com
+   PGADMIN_PASSWORD=your-secure-password
+   ```
+3. Restart services: `docker compose up -d`
+4. Access pgAdmin at `http://localhost:5050`
+5. Login with your configured email/password
+6. Add server connection using container name `lab-postgres-1` as host
+
+**Note:** pgAdmin only supports Postgres. For MySQL/Redis, you'll still need DBeaver or other tools.
 
 ---
 
