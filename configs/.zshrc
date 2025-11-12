@@ -3,9 +3,11 @@
 
 # Oh My Zsh configuration
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
-plugins=(git)
-source $ZSH/oh-my-zsh.sh
+if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+  ZSH_THEME="robbyrussell"
+  plugins=(git)
+  source $ZSH/oh-my-zsh.sh
+fi
 
 # History & shell options
 setopt hist_ignore_space
