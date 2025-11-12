@@ -358,17 +358,4 @@ For use in other repositories or when GitHub auto-template isn't desired, see `P
 
 ## 🐧 Linux Setup
 
-Looking for a Linux-specific bootstrap? See `linux/README.md` for an apt-based installer and distro notes. It reuses the shared configs in `configs/` so you can maintain a single source of truth.
-
-Basic flow on Ubuntu/Debian:
-```bash
-git clone https://github.com/ayopedro/lab.git
-cd lab/linux
-chmod +x bootstrap.sh
-./bootstrap.sh
-```
-Then from repo root:
-```bash
-docker compose up -d
-```
-For other distros (Fedora, Arch), adapt the package installation section or contribute a PR adding detection logic.
+For Linux (Ubuntu/Debian) setup instructions, see [`linux/README.md`](linux/README.md).
