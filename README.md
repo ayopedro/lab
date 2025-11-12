@@ -36,7 +36,7 @@ git clone https://github.com/ayopedro/lab.git
 cd lab
 
 # make the `.sh` files executable
-chmod +x bootstrap.sh create_database.sh
+chmod +x bootstrap.sh scripts/*.sh
 
 # bootstrap the tools
 ./bootstrap.sh
@@ -114,7 +114,7 @@ For environment-variable substitution inside DBeaver, manually enter resolved va
 
 ## 🛠️ Database Management Script
 
-`create_database.sh` provides an idempotent way to create (or recreate) Postgres or MySQL/MariaDB databases inside running containers.
+`scripts/create_database.sh` provides an idempotent way to create (or recreate) Postgres or MySQL/MariaDB databases inside running containers.
 
 | Flag | Alias | Value Required | Purpose |
 |------|-------|----------------|---------|
@@ -127,10 +127,10 @@ For environment-variable substitution inside DBeaver, manually enter resolved va
 | `--type` | `-t` | yes | Database type: `postgres` or `mysql` |
 
 ### Alias Setup
-After ensuring the script is executable (`chmod +x create_database.sh`), add this to your `~/.zshrc` (adjust path if cloned elsewhere):
+After ensuring the script is executable (`chmod +x scripts/*.sh`), add this to your `~/.zshrc` (adjust path if cloned elsewhere):
 
 ```bash
-alias spindb='~/lab/create_database.sh'
+alias spindb='~/lab/scripts/create_database.sh'
 ```
 
 Reload shell:
@@ -194,10 +194,11 @@ ln -s ~/lab/configs/.gitconfig ~/.gitconfig
 ```
 
 After symlinking:
-1. Edit `~/.gitconfig` to set your real `user.email`, `user.name`, and replace `<GPG_KEY_ID>`.
-2. Generate or import your GPG key (see Manual Steps) before enabling signed commits.
-3. Optionally create `~/.zshrc.local` for machine-specific overrides (not tracked).
-4. Import `vscode_settings.json` by opening VS Code and using the Settings JSON editor (`⌘,` then Open Settings (JSON)).
+1. **Edit `configs/.zshrc`** to customize aliases and remove any you don't need (e.g., `k8s` if you don't use kubectl, `jet` if you don't use WebStorm).
+2. Edit `~/.gitconfig` to set your real `user.email`, `user.name`, and replace `<GPG_KEY_ID>`.
+3. Generate or import your GPG key (see Manual Steps) before enabling signed commits.
+4. Optionally create `~/.zshrc.local` for machine-specific overrides (not tracked).
+5. Import `vscode_settings.json` by opening VS Code and using the Settings JSON editor (`⌘,` then Open Settings (JSON)).
 
 ---
 
