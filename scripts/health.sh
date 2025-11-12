@@ -3,17 +3,24 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-OK=0
+PASS=0
 FAIL=0
+WARN=0
 
-log_ok() { printf "[OK] %s\n" "$1"; }
-log_fail() { printf "[FAIL] %s\n" "$1"; FAIL=$((FAIL+1)); }
-log_warn() { printf "[WARN] %s\n" "$1"; }
+# ANSI color codes
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+log_ok() { printf "${GREEN}[PASS]${NC} %s\n" "$1"; }
+log_fail() { printf "${RED}[FAIL]${NC} %s\n" "$1"; FAIL=$((FAIL+1)); }
+log_warn() { printf "${YELLOW}[WARN]${NC} %s\n" "$1"; WARN=$((WARN+1)); }
 
 check_cmd() {
   if command -v "$1" >/dev/null 2>&1; then
     log_ok "Command '$1' present ($(command -v "$1"))"
-    OK=$((OK+1))
+    PASS=$((PASS+1))
   else
     log_fail "Command '$1' missing"
   fi
@@ -30,31 +37,43 @@ check_container() {
 
 check_port() {
   local port="$1"
-  if nc -z localhost "$port" 2>/dev/null; then
-    log_ok "Port $port reachable"
+  if command -v nc >/dev/null 2>&1; then
+    if nc -z localhost "$port" 2>/dev/null; then
+      log_ok "Port $port reachable"
+    else
+      log_fail "Port $port not reachable"
+    fi
   else
-    log_fail "Port $port not reachable"
+    log_warn "Cannot check port $port (nc not installed)"
   fi
 }
 
 # Core commands
-for c in git docker "docker compose" redis-cli psql mariadb go node; do
-  # handle space in 'docker compose'
-  if [[ "$c" == "docker compose" ]]; then
-    if docker compose version >/dev/null 2>&1; then
-      log_ok "Docker Compose plugin available"
-      OK=$((OK+1))
-    else
-      log_fail "Docker Compose plugin missing"
-    fi
+for c in git docker go node; do
+  check_cmd "$c" || true
+done
+
+# Docker Compose plugin
+if docker compose version >/dev/null 2>&1; then
+  log_ok "Docker Compose plugin available"
+  PASS=$((PASS+1))
+else
+  log_fail "Docker Compose plugin missing"
+fi
+
+# Optional CLI tools (warn if missing, don't fail - they're in containers)
+for c in redis-cli psql mariadb; do
+  if command -v "$c" >/dev/null 2>&1; then
+    log_ok "Command '$c' present (host install)"
+    PASS=$((PASS+1))
   else
-    check_cmd "$c" || true
+    log_warn "Command '$c' not on host (use via docker exec)"
   fi
 done
 
 # Containers (if docker available)
 if command -v docker >/dev/null 2>&1; then
-  for svc in postgres mysql redis; do
+  for svc in lab-postgres-1 lab-mysql-1 lab-redis-1; do
     check_container "$svc" || true
   done
 fi
@@ -64,7 +83,7 @@ check_port 5432 || true
 check_port 3306 || true
 check_port 6379 || true
 
-printf "\nSummary: OK=%d FAIL=%d\n" "$OK" "$FAIL"
+printf "\nSummary: \n${GREEN}PASS: %d${NC} \n${YELLOW}WARN: %d${NC} \n${RED}FAIL: %d${NC}\n" "$PASS" "$WARN" "$FAIL"
 if [[ $FAIL -gt 0 ]]; then
   exit 1
 fi
