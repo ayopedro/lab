@@ -203,18 +203,43 @@ After symlinking:
 
 ## 🧪 Bootstrap Script
 
-`bootstrap.sh` is the primary entry point for new machine setup. It typically handles:
+`bootstrap.sh` is the primary entry point for new machine setup (macOS-focused). It handles:
 
-1. Installing or updating core development tools
-2. Setting up Oh My Zsh and plugins
-3. Configuring terminal preferences
-4. Optionally spinning up local databases
+1. Installing Homebrew (if not present)
+2. Installing packages from Brewfile (git, docker, zsh, etc.)
+3. Setting up Oh My Zsh and NVM
+4. Optionally starting Docker Compose services
 
-Run manually if needed:
+### Usage
 
+**Standard run** (installs everything):
 ```bash
 ./bootstrap.sh
 ```
+
+**Dry-run mode** (see what would be installed without making changes):
+```bash
+./bootstrap.sh --dry-run
+```
+
+**Interactive mode** (prompt before each step):
+```bash
+./bootstrap.sh -i
+# or
+./bootstrap.sh --interactive
+```
+
+**Combine flags** (preview with prompts):
+```bash
+./bootstrap.sh --dry-run -i
+```
+
+**Help**:
+```bash
+./bootstrap.sh --help
+```
+
+The script is idempotent — safe to run multiple times. Existing installations are detected and skipped.
 
 ---
 
@@ -300,10 +325,12 @@ Open Docker Desktop (macOS) or run `docker login` for private registries.
 
 | Tip | Detail |
 |-----|--------|
-| Modular scripts | Each script under `setup/` is modular—run only what you need. |
-| Keep updated | Refresh this repo as tools/preferences change. |
-| Service scope | Add/remove services as your stack evolves. |
-| Consistency | Goal: same setup across machines. |
+| Dry-run first | Use `./bootstrap.sh --dry-run` to preview changes safely |
+| Interactive mode | Use `-i` flag to approve each step individually |
+| Health checks | Run `./scripts/health.sh` to verify environment after setup |
+| Keep updated | Refresh this repo as tools/preferences change |
+| Service scope | Add/remove services as your stack evolves |
+| Consistency | Goal: same setup across machines |
 
 ---
 
@@ -316,11 +343,9 @@ Personal setup repository — free to reuse or adapt. No warranty. Attribution a
 ## 🔮 Future Improvements (Optional)
 | Idea | Benefit |
 |------|---------|
-| Add CI to lint scripts | Ensures ongoing script quality |
-| Secrets management docs | Clarify handling of tokens & keys |
 | Automated GPG export script | Faster multi-machine onboarding |
-| Health check script | Verifies all tools installed correctly |
 | Script test harness | Adds reliability for shell changes |
+| Expanded platform support | Windows WSL2 bootstrap variant |
 
 ---
 

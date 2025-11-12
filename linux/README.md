@@ -30,18 +30,32 @@ cd lab/linux
 # Make scripts executable if not already
 chmod +x bootstrap.sh
 
-# Run bootstrap
+# Run bootstrap (standard)
 ./bootstrap.sh
+
+# Or preview changes first (dry-run mode)
+./bootstrap.sh --dry-run
+
+# Or interactive mode (prompt before each step)
+./bootstrap.sh -i
+
+# Combine flags
+./bootstrap.sh --dry-run -i
+
+# Show help
+./bootstrap.sh --help
 ```
 
 ## What The Bootstrap Does
 1. Detects distro via `/etc/os-release`.
-2. Updates apt package index.
+2. Updates apt package index (with prompt in interactive mode).
 3. Installs essential packages (git, curl, wget, zsh, jq, gnupg, build tools, docker dependencies).
 4. Installs / configures Docker (if missing) using official convenience script.
 5. Installs Oh My Zsh (non-interactive) + leaves existing `.zshrc` intact.
 6. Installs NVM and (optionally) latest LTS Node.
 7. Leaves databases to `docker compose` from the repository root.
+
+The script is **idempotent** — safe to run multiple times. Existing tools are detected and skipped.
 
 ## Required Packages (Apt)
 | Package | Reason |
