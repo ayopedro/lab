@@ -288,10 +288,11 @@ Open Docker Desktop (macOS) or run `docker login` for private registries.
 
 | Requirement | Notes |
 |-------------|-------|
-| macOS (Apple Silicon / Intel) | Primary target |
-| Ubuntu / Linux | Untested, may require manual adjustments |
+| macOS (Apple Silicon / Intel) | Primary target for root bootstrap |
 | Internet connection | Needed for installs |
 | Sudo privileges | Required for package installs |
+
+**For Linux:** See [`linux/README.md`](linux/README.md) for Debian/Ubuntu instructions.
 
 ---
 
