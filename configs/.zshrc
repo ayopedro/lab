@@ -1,6 +1,15 @@
 # ~/.zshrc (Lab template)
 # Customize user-specific values as needed.
 
+# Oh My Zsh configuration
+export ZSH="$HOME/.oh-my-zsh"
+if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+  ZSH_THEME="robbyrussell"
+  plugins=(git)
+  source "$ZSH/oh-my-zsh.sh"
+fi
+source $ZSH/oh-my-zsh.sh
+
 # History & shell options
 setopt hist_ignore_space
 setopt inc_append_history
@@ -29,22 +38,6 @@ if [ -s "$HOME/.nvm/nvm.sh" ]; then
   . "$HOME/.nvm/nvm.sh"
 fi
 
-# Oh My Zsh (if installed)
-if [ -d "$HOME/.oh-my-zsh" ]; then
-  export ZSH="$HOME/.oh-my-zsh"
-  ZSH_THEME="agnoster"
-  plugins=(git)
-  source "$ZSH/oh-my-zsh.sh"
-fi
-
-# Git branch helper
-parse_git_branch() {
-  git branch --show-current 2>/dev/null | awk '{if($0) print "("$0")"}'
-}
-
-# Prompt (shows user@host, cwd, git branch, exit code)
-PROMPT='%F{cyan}%n@%m%f %F{yellow}%1~%f $(parse_git_branch) %F{red}%?%f\n➜ '
-
 # Aliases
 alias ll='ls -lah'
 alias la='ls -A'
@@ -52,10 +45,11 @@ alias gs='git status -sb'
 alias gb='git branch'
 alias gc='git commit'
 alias gp='git push'
-alias labdb='$HOME/lab/create_database.sh'
-alias spindb='$HOME/lab/create_database.sh' # Primary alias referenced in README
+alias spindb='$HOME/lab/scripts/create_database.sh'
 alias labbootstrap='$HOME/lab/bootstrap.sh'
-alias rediscli='docker exec -it redis redis-cli'
+alias rediscli='docker exec -it lab-redis-1 redis-cli'
+alias k8s='kubectl'
+alias jet='open -a "WebStorm"'
 
 # Editor
 export EDITOR="code --wait"
@@ -73,5 +67,13 @@ if command -v gpg >/dev/null 2>&1; then
   export GPG_TTY=$(tty)
 fi
 
+# Angular CLI autocompletion (if ng is installed)
+if command -v ng >/dev/null 2>&1; then
+  source <(ng completion script)
+fi
+
 # Source additional local overrides (not tracked)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# Zsh syntax highlighting - MUST be at the end (if installed via Homebrew)
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
