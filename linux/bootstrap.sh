@@ -81,6 +81,7 @@ require_root_or_sudo() {
 
 DETECT_DISTRO() {
   if [[ -f /etc/os-release ]]; then
+    # shellcheck source=/dev/null
     . /etc/os-release
     DISTRO=$ID
   else

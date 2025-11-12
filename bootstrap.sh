@@ -6,7 +6,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # --- Config -----------------------------------------------------------------
-OS="$(uname -s | tr 'A-Z' 'a-z')"
+OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 IS_MAC=false
 if [[ "$OS" == "darwin" ]]; then
   IS_MAC=true
