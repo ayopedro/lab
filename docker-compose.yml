@@ -1,0 +1,53 @@
+
+services:
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin4_container
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8888:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ayopedro2012@gmail.com
+  #     PGADMIN_DEFAULT_PASSWORD: password
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #     - /home/ayopedro/Downloads:/var/downloads
+  mysql:
+    image: mariadb:lts
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - '3306:3306'
+    restart: always
+    volumes:
+      - mysql:/var/lib/mysql
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: always
+  redis:
+    image: redis:latest
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+volumes:
+  # pgadmin-data:
+  postgres:
+  redis:
+  mysql:

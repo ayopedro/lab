@@ -1,0 +1,41 @@
+{
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [100],
+  "editor.renderWhitespace": "selection",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.wordWrap": "bounded",
+  "editor.fontFamily": "JetBrains Mono, Menlo, monospace",
+  "editor.fontLigatures": true,
+  "editor.minimap.enabled": true,
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.startupEditor": "none",
+  "git.enableCommitSigning": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "go.useLanguageServer": true,
+  "go.toolsManagement.autoUpdate": true,
+  "go.formatTool": "gofmt",
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on"
+  },
+  "security.workspace.trust.enabled": true,
+  "editor.inlineSuggest.enabled": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false
+}

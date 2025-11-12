@@ -1,0 +1,55 @@
+# ~/.gitconfig (Lab template)
+# Update user.name, user.email, and signingkey with your details.
+
+[user]
+	name = Ayotunde Pedro
+	email = you@example.com
+	signingkey = <GPG_KEY_ID>
+
+[commit]
+	gpgsign = true
+
+[core]
+	editor = code --wait
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+
+[color]
+	ui = auto
+
+[alias]
+	st = status -sb
+	co = checkout
+	br = branch
+	ci = commit
+	lg = log --oneline --graph --decorate --color
+	amend = commit --amend --no-edit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	fixup = commit --fixup
+	graph = log --graph --decorate --oneline
+	diffc = diff --cached
+
+[push]
+	default = current
+
+[pull]
+	rebase = false
+
+[merge]
+	ff = false
+
+[diff]
+	tool = code
+
+[difftool "code"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+
+[rerere]
+	enabled = true
+
+[tag]
+	forceSignAnnotated = true
+
+[gpg]
+	program = gpg

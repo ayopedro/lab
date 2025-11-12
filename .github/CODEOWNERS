@@ -1,0 +1,6 @@
+# CODEOWNERS - adjust GitHub usernames as collaborators join
+# Format: pattern  owner1 owner2
+* @ayopedro
+.github/ @ayopedro
+scripts/ @ayopedro
+linux/ @ayopedro

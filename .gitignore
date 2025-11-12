@@ -1,0 +1,22 @@
+# Ignore environment secrets and backups
+.env
+*.dump
+public_backup.asc
+private_backup.asc
+*.log
+
+# Node / dependency caches
+node_modules/
+
+# Editor settings caches
+.vscode/
+
+# macOS cruft
+.DS_Store
+
+# Python bytecode (if any future scripts)
+__pycache__/
+*.pyc
+
+# Misc
+coverage/
