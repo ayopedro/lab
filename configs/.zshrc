@@ -5,6 +5,10 @@
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git)
+# Add Docker CLI completions to fpath before Oh My Zsh initialization
+if [ -d "$HOME/.docker/completions" ]; then
+  fpath=($HOME/.docker/completions $fpath)
+fi
 source $ZSH/oh-my-zsh.sh
 
 # History & shell options
@@ -62,13 +66,6 @@ if command -v fgrep >/dev/null 2>&1; then alias fgrep='fgrep --color=auto'; fi
 # Export GPG_TTY for commit signing if gpg present
 if command -v gpg >/dev/null 2>&1; then
   export GPG_TTY=$(tty)
-fi
-
-# Docker CLI completions (added by Docker Desktop)
-if [ -d "$HOME/.docker/completions" ]; then
-  fpath=($HOME/.docker/completions $fpath)
-  autoload -Uz compinit
-  compinit
 fi
 
 # Angular CLI autocompletion (if ng is installed)
