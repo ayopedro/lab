@@ -24,7 +24,7 @@ Welcome to Ayo's **Lab** — a personal repository for bootstrapping a new devel
 
 ## 🚀 Quick Start (macOS Focus)
 
-This setup currently optimizes for **macOS** (Homebrew, Docker Desktop). Linux support can be added later.
+This setup currently optimizes for **macOS** (Homebrew, Docker Desktop). **Linux support** can be found [here](linux/README.md).
 
 Clone the repository, make scripts executable, then run the bootstrap script:
 
@@ -399,9 +399,3 @@ Before opening a PR:
 ## 📄 Standalone PR Template
 For use in other repositories or when GitHub auto-template isn't desired, see `PR_TEMPLATE_STANDALONE.md` at the project root. Copy it into any repo or adapt sections to your workflow.
 
-
----
-
-## 🐧 Linux Setup
-
-For Linux (Ubuntu/Debian) setup instructions, see [`linux/README.md`](linux/README.md).
