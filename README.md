@@ -58,6 +58,7 @@ The script installs core tools, applies configurations, and can initialize local
 | NVM (Node Version Manager) | Manages multiple Node.js versions |
 | Go | Go programming language toolchain |
 | Gemini CLI | Command-line interface for Gemini AI |
+| Antigravity | Optional tool added to PATH if installed at `~/.antigravity/antigravity/bin` |
 | Docker | Container runtime for services and environments |
 | Docker Compose | Defines & runs multi-container setups |
 | Health Script (`scripts/health.sh`) | Verifies core tools, containers, and ports |
