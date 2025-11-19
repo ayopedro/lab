@@ -50,6 +50,7 @@ alias labbootstrap='$HOME/lab/bootstrap.sh'
 alias rediscli='docker exec -it lab-redis-1 redis-cli'
 alias k8s='kubectl'
 alias jet='open -a "WebStorm"'
+alias nr='npm run'
 
 # Editor
 export EDITOR="code --wait"
@@ -77,3 +78,8 @@ fi
 
 # Zsh syntax highlighting - MUST be at the end (if installed via Homebrew)
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Added by Antigravity (optional - only if installed)
+if [ -d "$HOME/.antigravity/antigravity/bin" ]; then
+  export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+fi
