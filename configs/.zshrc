@@ -76,10 +76,10 @@ fi
 # Source additional local overrides (not tracked)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
-# Zsh syntax highlighting - MUST be at the end (if installed via Homebrew)
-[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Added by Antigravity (optional - only if installed)
 if [ -d "$HOME/.antigravity/antigravity/bin" ]; then
   export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 fi
+
+# Zsh syntax highlighting - MUST be at the end (if installed via Homebrew)
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
