@@ -76,10 +76,26 @@ fi
 # Source additional local overrides (not tracked)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
-# Antigravity CLI tool (optional - only if installed)
-if [ -d "$HOME/.antigravity/antigravity/bin" ]; then
-  export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
-fi
-
 # Zsh syntax highlighting - MUST be at the end (if installed via Homebrew)
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# bun completions
+[ -s "/Users/xxdr0/.bun/_bun" ] && source "/Users/xxdr0/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/xxdr0/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/xxdr0/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/xxdr0/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/xxdr0/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/xxdr0/google-cloud-sdk/completion.zsh.inc'; fi
